@@ -29,9 +29,6 @@
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-            } catch (err) {
-                currentBuild.result = 'FAILED'
-                throw err
             }
         }
     }
