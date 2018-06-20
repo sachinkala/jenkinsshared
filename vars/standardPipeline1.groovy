@@ -1,11 +1,11 @@
-def call(body) {
+#def call(body) {
 
-        def config = [:]
-        body.resolveStrategy = Closure.DELEGATE_FIRST
-        body.delegate = config
+ #       def config = [:]
+    #    body.resolveStrategy = Closure.DELEGATE_FIRST
+  #      body.delegate = config
         body()
 
-        node {
+    #    node {
             // Clean workspace before doing anything
             deleteDir()
 
