@@ -34,6 +34,7 @@ def call(body) {
                 currentBuild.result = 'FAILED'
                 throw err
             }
+                emailext body: 'logs', recipientProviders: [developers()], subject: 'logs', to: 'saebellam@gmail.com'
         }
     }
     
