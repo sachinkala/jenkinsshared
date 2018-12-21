@@ -1,40 +1,23 @@
-def call(body) {
+package com.capitalone.api.creditcards.applicationfraud.appfraudmicroservice.config;
 
-        def config = [:]
-        body.resolveStrategy = Closure.DELEGATE_FIRST
-        body.delegate = config
-        body()
+import com.capitalone.api.creditcards.applicationfraud.appfraudmicroservice.rest.v3.CardAppFraudResource;
+import com.capitalone.chassis.engine.jersey.extensions.config.BaseResourceConfig;
+import org.springframework.context.annotation.Configuration;
 
-        node {
-            // Clean workspace before doing anything
-            deleteDir()
-
-            try {
-                stage ('Clone') {
-                    checkout scm
-                }
-                stage ('Build') {
-                    sh "echo 'building ${config.projectName} ...'"
-                }
-                stage ('Tests') {
-                    parallel 'static': {
-                        sh "echo 'shell scripts to run static tests...'"
-                    },
-                    'unit': {
-                        sh "echo 'shell scripts to run unit tests...'"
-                    },
-                    'integration': {
-                        sh "echo 'shell scripts to run integration tests...'"
-                    }
-                }
-                stage ('Deploy') {
-                    sh "echo 'deploying to server ${config.serverDomain}...'"
-                }
-            } catch (err) {
-                currentBuild.result = 'FAILED'
-                throw err
-            }
-                emailext body: 'logs', recipientProviders: [developers()], subject: 'logs', to: 'saebellam@gmail.com'
-        }
+@Configuration
+public class ResourceConfig extends BaseResourceConfig {
+    public ResourceConfig() {
+        super();
+        register( CardAppFraudResource.class);
     }
-    
+}
+
+
+
+/*
+ * Copyright 2018 Capital One Financial Corporation All Rights Reserved.
+ *
+ * This software contains valuable trade secrets and proprietary information of Capital One and is protected by law. It
+ * may not be copied or distributed in any form or medium, disclosed to third parties, reverse engineered or used in any
+ * manner without prior written authorization from Capital One.
+ */
